@@ -25,10 +25,11 @@ const PRIVACY = 'https://www.iubenda.com/privacy-policy/10830089';
 const COOKIE = 'https://www.iubenda.com/privacy-policy/10830089/cookie-policy';
 
 const STUDIOS = {
-  pozzuoli: { name: 'Pozzuoli', place: 'Pozzuoli', street: 'Via Campana 266', zip: '80078', region: 'NA', slug: 'nutrizionista-sportivo-pozzuoli', hours: [['Mercoledì', '9:00 - 13:00'], ['Venerdì', '14:00 - 20:00']], spec: [['Wednesday', '09:00', '13:00'], ['Friday', '14:00', '20:00']] },
-  qualiano: { name: 'Qualiano', place: 'Qualiano', street: 'Via Canonico Migliaccio 18', zip: '80019', region: 'NA', slug: 'nutrizionista-sportivo-qualiano', hours: [['Martedì', '9:00 - 20:00'], ['Mercoledì', '14:00 - 20:00'], ['Sabato', '9:00 - 13:00']], spec: [['Tuesday', '09:00', '20:00'], ['Wednesday', '14:00', '20:00'], ['Saturday', '09:00', '13:00']] },
-  caserta: { name: 'San Nicola la Strada (Caserta)', place: 'Caserta', loc: 'San Nicola la Strada', street: 'Via Eugenio Montale 13', zip: '81020', region: 'CE', slug: 'nutrizionista-sportivo-caserta', hours: [['Orari', 'su appuntamento']], spec: [] },
+  villaricca: { name: 'Villaricca', place: 'Villaricca', street: 'Via Torino 58', zip: '80010', region: 'NA', slug: 'nutrizionista-sportivo-villaricca', hours: [['Martedì', '9:00 - 20:00'], ['Mercoledì', '9:00 - 20:00'], ['Sabato', '9:00 - 13:00']], spec: [['Tuesday', '09:00', '20:00'], ['Wednesday', '09:00', '20:00'], ['Saturday', '09:00', '13:00']] },
+  agerola: { name: 'Agerola', place: 'Agerola', street: 'Via Antonio Coppola 44', zip: '80051', region: 'NA', slug: 'nutrizionista-sportivo-agerola', hours: [['Lunedì', '10:00 - 20:00']], spec: [['Monday', '10:00', '20:00']] },
+  caserta: { name: 'San Nicola la Strada (Caserta)', place: 'Caserta', loc: 'San Nicola la Strada', street: 'Via Eugenio Montale 13', zip: '81020', region: 'CE', slug: 'nutrizionista-sportivo-caserta', hours: [['Giovedì', '10:00 - 20:00']], spec: [['Thursday', '10:00', '20:00']] },
 };
+const ad = (p) => (/^[Aa]/.test(p) ? 'ad ' : 'a ') + p;
 const mapsUrl = (s) => `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${s.street} ${s.loc || s.name} ${s.zip}`)}`;
 const wa = (t) => `https://wa.me/${TEL.replace('+', '')}?text=${encodeURIComponent(t)}`;
 const WA_GEN = wa('Buongiorno Dott. Licciardiello, ho visitato il suo sito e vorrei maggiori informazioni sul percorso di nutrizione sportiva e prenotare una visita.');
@@ -40,7 +41,7 @@ const SERVICES = {
   'nutrizione-sportiva': {
     short: 'Nutrizione sportiva', card: 'Performance e gara',
     title: 'Nutrizione sportiva per atleti e sportivi | Dott. Licciardiello',
-    desc: 'Piani di nutrizione sportiva su misura, costruiti su carichi di allenamento, gare e obiettivi. Visite a Pozzuoli, Qualiano e Caserta. Prenota su WhatsApp.',
+    desc: 'Piani di nutrizione sportiva su misura, costruiti su carichi di allenamento, gare e obiettivi. Visite a Villaricca, Agerola e Caserta. Prenota su WhatsApp.',
     h1: 'Nutrizione sportiva <mark>su misura</mark>',
     lead: 'Un piano alimentare costruito sul tuo sport, sul calendario di allenamenti e gare e sui tuoi obiettivi. Si parte da una visita completa.',
     cardText: 'Alimentazione periodizzata sui carichi di lavoro, con strategie per gare, trasferte e fasi intense della stagione.',
@@ -63,7 +64,7 @@ const SERVICES = {
   'composizione-corporea': {
     short: 'Composizione corporea', card: 'Composizione corporea',
     title: 'Dimagrimento e composizione corporea | Dott. Licciardiello',
-    desc: 'Ridurre la massa grassa o costruire massa magra in modo sostenibile, senza sacrificare energia e prestazione. Visite a Pozzuoli, Qualiano e Caserta.',
+    desc: 'Ridurre la massa grassa o costruire massa magra in modo sostenibile, senza sacrificare energia e prestazione. Visite a Villaricca, Agerola e Caserta.',
     h1: 'Dimagrimento e <mark>composizione corporea</mark>',
     lead: 'Ridurre la massa grassa o costruire massa magra in modo sostenibile, senza sacrificare energia e prestazione.',
     cardText: 'Ridurre massa grassa o costruire massa magra in modo sostenibile, senza sacrificare energia e prestazione.',
@@ -85,7 +86,7 @@ const SERVICES = {
   'recupero-e-integrazione': {
     short: 'Recupero e integrazione', card: 'Recupero e integrazione',
     title: 'Recupero e integrazione sportiva | Dott. Licciardiello',
-    desc: 'Alimentazione e integrazione mirata a sostegno di forza, recupero e continuità degli allenamenti. Visite a Pozzuoli, Qualiano e Caserta.',
+    desc: 'Alimentazione e integrazione mirata a sostegno di forza, recupero e continuità degli allenamenti. Visite a Villaricca, Agerola e Caserta.',
     h1: 'Recupero e <mark>integrazione sportiva</mark>',
     lead: 'Alimentazione e integrazione mirata a sostegno di forza, recupero e continuità degli allenamenti.',
     cardText: 'Reintegro post-allenamento e integrazione mirata a sostegno di forza, recupero e continuità degli allenamenti.',
@@ -106,7 +107,7 @@ const SERVICES = {
   'prima-visita': {
     short: 'Prima visita', card: 'La prima visita',
     title: 'Prima visita nutrizionale: come funziona | Dott. Licciardiello',
-    desc: 'Come si svolge la prima visita di nutrizione sportiva: colloquio, plicometria, impedenziometria e piano alimentare personalizzato. Pozzuoli, Qualiano, Caserta.',
+    desc: 'Come si svolge la prima visita di nutrizione sportiva: colloquio, plicometria, impedenziometria e piano alimentare personalizzato. Villaricca, Agerola, Caserta.',
     h1: 'La prima visita <mark>nutrizionale</mark>',
     lead: 'Una visita completa per capire da dove parti: abitudini, allenamento, composizione corporea e obiettivi.',
     cardText: 'Colloquio, plicometria, impedenziometria e piano personalizzato: come funziona la visita di partenza.',
@@ -116,11 +117,11 @@ const SERVICES = {
 <h3>Prima dell'appuntamento</h3>
 <p>Per sapere come prepararti alla visita, chiedi indicazioni quando concordi l'appuntamento. Puoi raccontare il tuo sport e il tuo obiettivo durante il colloquio.</p>
 <h3>Dove ricevo</h3>
-<ul><li><a href="../nutrizionista-sportivo-pozzuoli/">Studio di Pozzuoli</a>, Via Campana 266</li><li><a href="../nutrizionista-sportivo-qualiano/">Studio di Qualiano</a>, Via Canonico Migliaccio 18</li><li><a href="../nutrizionista-sportivo-caserta/">Studio di San Nicola la Strada (Caserta)</a>, Via Eugenio Montale 13, su appuntamento</li></ul>
+<ul><li><a href="../nutrizionista-sportivo-villaricca/">Studio di Villaricca</a>, Via Torino 58</li><li><a href="../nutrizionista-sportivo-agerola/">Studio di Agerola</a>, Via Antonio Coppola 44</li><li><a href="../nutrizionista-sportivo-caserta/">Studio di San Nicola la Strada (Caserta)</a>, Via Eugenio Montale 13</li></ul>
 <h3>Come prenotare</h3>
 <p>Scrivimi su WhatsApp o chiama il ${PHONE}: ti indico le disponibilità dello studio più comodo per te.</p>`,
     faq: [
-      ['Dove si svolge la visita?', 'In uno dei tre studi: Pozzuoli, Qualiano o San Nicola la Strada (Caserta). Puoi scegliere quello più comodo.'],
+      ['Dove si svolge la visita?', 'In uno dei tre studi: Villaricca, Agerola o San Nicola la Strada (Caserta). Puoi scegliere quello più comodo.'],
       ['Posso prenotare su WhatsApp?', `Sì, scrivendo al ${PHONE}. Puoi anche chiamare lo stesso numero.`],
       ['Dopo la prima visita cosa succede?', 'Ricevi il piano alimentare personalizzato e, in base al percorso scelto, i controlli periodici per aggiustarlo.'],
     ],
@@ -134,7 +135,7 @@ const FAQ = [
   ['Cosa fa un nutrizionista sportivo?', 'Costruisce un piano alimentare sul tuo sport, sui tuoi carichi di allenamento, sul calendario gare e sui tuoi obiettivi: energia, recupero e composizione corporea. Non una dieta generica, ma una strategia che segue quello che fai davvero.'],
   ['Come si svolge la prima visita?', 'La prima visita è completa: raccolta di storia, abitudini e obiettivi, valutazione della composizione corporea con plicometria e impedenziometria, e costruzione del piano alimentare personalizzato. <a href="prima-visita/">Scopri come funziona</a>.'],
   ['Devo essere un atleta professionista per rivolgermi a te?', 'No. Il percorso è pensato per chi si allena con costanza, a ogni livello: dal praticante amatoriale all\'agonista.'],
-  ['Dove ricevi i pazienti?', 'Ho tre studi: Pozzuoli (Via Campana 266), Qualiano (Via Canonico Migliaccio 18) e San Nicola la Strada, vicino Caserta (Via Eugenio Montale 13, su appuntamento).'],
+  ['Dove ricevi i pazienti?', 'Ho tre studi: Villaricca (Via Torino 58), Agerola (Via Antonio Coppola 44) e San Nicola la Strada, vicino Caserta (Via Eugenio Montale 13, giovedì dalle 10:00 alle 20:00).'],
   ['Come prenoto una visita?', `Scrivimi su WhatsApp al ${PHONE} o usa il modulo in pagina: ti rispondo con le disponibilità dello studio più comodo per te.`],
   ['Quanto costa un percorso?', 'Dipende dal pacchetto scelto (Bronzo, Silver o Gold) e dal numero di controlli previsti. Per costi e disponibilità scrivimi su WhatsApp: ti rispondo con tutti i dettagli.'],
   ['Il pacchetto ha una scadenza?', 'Sì: se resti inattivo per più di 6 mesi, il pacchetto non è più valido.'],
@@ -180,7 +181,7 @@ const head = ({ title, desc, canon, rel = '', ld, preload = '', noindex = false,
 <meta property="og:image" content="${SITE}/assets/og-image.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="${NAME}, nutrizionista sportivo a Pozzuoli, Qualiano e Caserta">
+<meta property="og:image:alt" content="${NAME}, nutrizionista sportivo a Villaricca, Agerola e Caserta">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="${title}">
 <meta name="twitter:description" content="${desc}">
@@ -229,7 +230,7 @@ const footer = (rel = '') => `<footer class="footer">
           <a href="${SOCIAL.youtube}" target="_blank" rel="noopener" aria-label="YouTube">${ic('youtube-logo')}</a>
         </div>
       </div>
-${Object.values(STUDIOS).map((s) => `      <div><h4>${s.place}</h4><address>${s.street}<br>${s.zip} ${s.loc || s.name} (${s.region})</address><ul>${s.hours.map(([d, h]) => `<li>${d}: ${h}</li>`).join('')}</ul><ul class="footer__links"><li><a href="${rel}${s.slug}/">Nutrizionista a ${s.place}</a></li><li><a href="${mapsUrl(s)}" target="_blank" rel="noopener"${attr({ cta: 'footer', location: s.place.toLowerCase() })}>Indicazioni</a></li></ul></div>`).join('\n')}
+${Object.values(STUDIOS).map((s) => `      <div><h4>${s.place}</h4><address>${s.street}<br>${s.zip} ${s.loc || s.name} (${s.region})</address><ul>${s.hours.map(([d, h]) => `<li>${d}: ${h}</li>`).join('')}</ul><ul class="footer__links"><li><a href="${rel}${s.slug}/">Nutrizionista ${ad(s.place)}</a></li><li><a href="${mapsUrl(s)}" target="_blank" rel="noopener"${attr({ cta: 'footer', location: s.place.toLowerCase() })}>Indicazioni</a></li></ul></div>`).join('\n')}
     </div>
     <div class="footer__grid footer__grid--2">
       <div><h4>Servizi</h4><ul>${Object.entries(SERVICES).map(([k, v]) => `<li><a href="${rel}${k}/">${v.short}</a></li>`).join('')}</ul></div>
@@ -254,11 +255,11 @@ const waBtn = ({ href, label, cls = 'btn--primary', cta, service, location, icon
 const write = (rel, content) => { const f = path.join(ROOT, rel); fs.mkdirSync(path.dirname(f), { recursive: true }); fs.writeFileSync(f, content); };
 
 // ============ HOME ============
-const homeLd = [siteLd, webPageLd(SITE + '/', 'Nutrizionista sportivo a Pozzuoli, Qualiano e Caserta'), personLd, branchLd('pozzuoli'), branchLd('qualiano'), branchLd('caserta')];
+const homeLd = [siteLd, webPageLd(SITE + '/', 'Nutrizionista sportivo a Villaricca, Agerola e Caserta'), personLd, branchLd('villaricca'), branchLd('agerola'), branchLd('caserta')];
 
 const home = head({
   title: 'Nutrizionista sportivo | Dott. Licciardiello',
-  desc: 'Nutrizionista sportivo a Pozzuoli, Qualiano e Caserta: piani alimentari su misura per atleti e sportivi, su carichi di lavoro e gare. Prenota su WhatsApp.',
+  desc: 'Nutrizionista sportivo a Villaricca, Agerola e Caserta: piani alimentari su misura per atleti e sportivi, su carichi di lavoro e gare. Prenota su WhatsApp.',
   canon: SITE + '/', ld: homeLd, preload: preloadDoc(''),
 }) + header('') + `
 
@@ -266,7 +267,7 @@ const home = head({
   <section class="hero" id="top">
     <div class="wrap hero__grid">
       <div>
-        <span class="kicker rv">Pozzuoli · Qualiano · Caserta</span>
+        <span class="kicker rv">Villaricca · Agerola · Caserta</span>
         <h1 class="rv">Nutrizionista sportivo per <mark>rendere di più</mark></h1>
         <p class="hero__sub rv" style="--i:1">Piani alimentari su misura per <strong>atleti e sportivi</strong>, costruiti sui tuoi carichi di lavoro, sulle gare e sui tuoi obiettivi fisici. Si parte da una visita completa.</p>
         <div class="hero__cta rv" style="--i:2">
@@ -283,7 +284,7 @@ const home = head({
 
   <section class="trust" aria-label="In sintesi">
     <ul class="wrap trust__list">
-      <li><b>3 studi</b><span>Pozzuoli, Qualiano, Caserta</span></li>
+      <li><b>3 studi</b><span>Villaricca, Agerola, Caserta</span></li>
       <li><b>Visita completa</b><span>Plicometria e impedenziometria</span></li>
       <li><b>Piano su misura</b><span>Calibrato su carichi e gare</span></li>
       <li><b>3 percorsi</b><span>Bronzo, Silver, Gold</span></li>
@@ -400,7 +401,7 @@ ${Object.entries(SERVICES).map(([k, v], i) => `        <article class="card rv" 
   <section class="sec" id="studi">
     <div class="wrap">
       <span class="eyebrow rv">Dove ricevo</span>
-      <h2 class="rv">Nutrizionista a Pozzuoli, Qualiano e Caserta</h2>
+      <h2 class="rv">Nutrizionista a Villaricca, Agerola e Caserta</h2>
       <p class="sec__lead rv">Tre studi in provincia di Napoli e Caserta: scegli quello più comodo.</p>
       <div class="studios">
 ${Object.entries(STUDIOS).map(([k, s], i) => `        <article class="studio rv" style="--i:${i}"><h3>${s.name}</h3><address>${s.street}, ${s.zip} ${s.loc || s.name} (${s.region})</address><dl>${s.hours.map(([d, h]) => `<dt>${d}</dt><dd>${h}</dd>`).join('')}</dl><div class="studio__cta">${waBtn({ href: wa(`Buongiorno, vorrei informazioni e disponibilità per lo studio di ${s.place}.`), label: `Scrivi allo studio di ${s.place}`, cls: 'btn--primary', cta: 'studio-card', location: k })}</div><div class="studio__links"><a class="link" href="${s.slug}/"${attr({ cta: 'studio-card', location: k })}>Pagina dello studio</a><a class="link" href="${mapsUrl(s)}" target="_blank" rel="noopener"${attr({ cta: 'studio-card', location: k })}>Indicazioni</a></div></article>`).join('\n')}
@@ -449,8 +450,8 @@ ${Object.entries(STUDIOS).map(([k, s]) => `          ${waBtn({ href: wa(`Buongio
         </label>
         <label for="f-studio">Studio preferito
           <select id="f-studio" name="studio">
-            <option data-location="pozzuoli">Pozzuoli</option>
-            <option data-location="qualiano">Qualiano</option>
+            <option data-location="villaricca">Villaricca</option>
+            <option data-location="agerola">Agerola</option>
             <option data-location="caserta">San Nicola la Strada (Caserta)</option>
             <option data-location="">Non lo so ancora</option>
           </select>
@@ -480,7 +481,7 @@ const relatedLinks = (keys, rel) => keys.map((k) => `<li><a class="link" href="$
 for (const [k, v] of Object.entries(SERVICES)) {
   const url = serviceUrl(k);
   const ld = [siteLd, webPageLd(url, v.title), personLd,
-    { '@type': 'Service', '@id': url + '#service', name: v.short, description: v.desc, serviceType: v.short, url, provider: { '@id': SITE + '/#vincenzo' }, areaServed: ['Pozzuoli', 'Qualiano', 'San Nicola la Strada', 'Caserta'] },
+    { '@type': 'Service', '@id': url + '#service', name: v.short, description: v.desc, serviceType: v.short, url, provider: { '@id': SITE + '/#vincenzo' }, areaServed: ['Villaricca', 'Agerola', 'San Nicola la Strada', 'Caserta'] },
     crumbLd([['Home', SITE + '/'], [v.short, url]])];
   const page = head({ title: v.title, desc: v.desc, canon: url, rel: '../', ld, preload: preloadDoc('../'), body: ' class="page--internal"' + attr({ service: k }) }) + header('../', true) + `
 
@@ -507,9 +508,9 @@ for (const [k, v] of Object.entries(SERVICES)) {
         <p class="note">Le informazioni di questa pagina hanno scopo divulgativo e non sostituiscono il parere del professionista.</p>
       </div>
       <aside class="local__aside">
-        <div class="studio"><h3>Parliamone</h3><p>Scrivimi su WhatsApp: ti rispondo con le disponibilità degli studi di Pozzuoli, Qualiano e Caserta.</p><div class="studio__cta">${waBtn({ href: wa(v.wa), label: 'Scrivimi su WhatsApp', cta: 'service-aside', service: k })}</div></div>
+        <div class="studio"><h3>Parliamone</h3><p>Scrivimi su WhatsApp: ti rispondo con le disponibilità degli studi di Villaricca, Agerola e Caserta.</p><div class="studio__cta">${waBtn({ href: wa(v.wa), label: 'Scrivimi su WhatsApp', cta: 'service-aside', service: k })}</div></div>
         <div class="studio"><h3>Approfondisci</h3><ul class="chips">${relatedLinks(v.related, '../')}</ul></div>
-        <div class="studio"><h3>Dove ricevo</h3><ul class="chips">${Object.values(STUDIOS).map((s) => `<li><a class="link" href="../${s.slug}/"${attr({ cta: 'related', location: s.place.toLowerCase() })}>Nutrizionista a ${s.place}</a></li>`).join('')}</ul></div>
+        <div class="studio"><h3>Dove ricevo</h3><ul class="chips">${Object.values(STUDIOS).map((s) => `<li><a class="link" href="../${s.slug}/"${attr({ cta: 'related', location: s.place.toLowerCase() })}>Nutrizionista ${ad(s.place)}</a></li>`).join('')}</ul></div>
       </aside>
     </div>
   </section>
@@ -543,42 +544,42 @@ for (const [k, v] of Object.entries(SERVICES)) {
 
 // ============ PAGINE LOCALI ============
 const CITY = {
-  pozzuoli: {
-    h1: 'Nutrizionista sportivo a <mark>Pozzuoli</mark>',
-    title: 'Nutrizionista sportivo a Pozzuoli | Dott. Licciardiello',
-    desc: 'Nutrizionista sportivo a Pozzuoli, Via Campana 266: visita completa e piano alimentare su misura per atleti e sportivi. Mercoledì e venerdì. Prenota ora.',
-    lead: 'Nel mio studio di Pozzuoli ricevo atleti e sportivi dei Campi Flegrei e dell\'area occidentale di Napoli che vogliono un piano alimentare costruito sul proprio sport.',
-    near: 'Pozzuoli, Bacoli, Monte di Procida, Quarto e Napoli ovest',
-    access: 'Lo studio si trova in Via Campana 266, a Pozzuoli.',
+  villaricca: {
+    h1: 'Nutrizionista sportivo a <mark>Villaricca</mark>',
+    title: 'Nutrizionista sportivo a Villaricca | Dott. Licciardiello',
+    desc: 'Nutrizionista sportivo a Villaricca, Via Torino 58: piani alimentari su misura per atleti e sportivi. Martedì, mercoledì e sabato. Prenota ora.',
+    lead: 'Nello studio di Villaricca ricevo atleti e sportivi dell\'area a nord di Napoli che vogliono un piano alimentare costruito sul proprio sport, sui carichi di lavoro e sulle gare.',
+    near: 'Villaricca, Qualiano, Giugliano, Calvizzano, Mugnano e Marano',
+    access: 'Lo studio si trova in Via Torino 58, a Villaricca.',
     faq: [
-      ['Dove si trova lo studio di Pozzuoli?', 'In Via Campana 266, 80078 Pozzuoli (NA). Trovi il link alle indicazioni stradali in questa pagina.'],
-      ['Quando riceve lo studio di Pozzuoli?', 'Il mercoledì dalle 9:00 alle 13:00 e il venerdì dalle 14:00 alle 20:00.'],
-      ['Come prenoto a Pozzuoli?', `Scrivimi su WhatsApp al ${PHONE} indicando che preferisci lo studio di Pozzuoli: ti rispondo con le disponibilità.`],
+      ['Dove si trova lo studio di Villaricca?', 'In Via Torino 58, 80010 Villaricca (NA). Trovi il link alle indicazioni stradali in questa pagina.'],
+      ['Quando riceve lo studio di Villaricca?', 'Il martedì e il mercoledì dalle 9:00 alle 20:00 e il sabato dalle 9:00 alle 13:00.'],
+      ['Come prenoto a Villaricca?', `Scrivimi su WhatsApp al ${PHONE} indicando che preferisci lo studio di Villaricca: ti rispondo con le disponibilità.`],
     ],
   },
-  qualiano: {
-    h1: 'Nutrizionista sportivo a <mark>Qualiano</mark>',
-    title: 'Nutrizionista sportivo a Qualiano | Dott. Licciardiello',
-    desc: 'Nutrizionista sportivo a Qualiano, Via Canonico Migliaccio 18: piani alimentari su misura per atleti e sportivi. Martedì, mercoledì e sabato. Prenota ora.',
-    lead: 'Nello studio di Qualiano seguo atleti e sportivi dell\'area a nord di Napoli con piani alimentari costruiti su carichi di lavoro, gare e obiettivi.',
-    near: 'Qualiano, Giugliano, Villaricca, Calvizzano, Mugnano e Marano',
-    access: 'Lo studio si trova in Via Canonico Migliaccio 18, a Qualiano.',
+  agerola: {
+    h1: 'Nutrizionista sportivo ad <mark>Agerola</mark>',
+    title: 'Nutrizionista sportivo ad Agerola | Dott. Licciardiello',
+    desc: 'Nutrizionista sportivo ad Agerola, Via Antonio Coppola 44: piani alimentari su misura per atleti e sportivi. Il lunedì dalle 10:00 alle 20:00. Prenota ora.',
+    lead: 'Nello studio di Agerola ricevo atleti e sportivi dei Monti Lattari e della Costiera Amalfitana che vogliono un piano alimentare costruito sul proprio sport.',
+    near: 'Agerola, Pimonte, Gragnano, Furore e i comuni vicini',
+    access: 'Lo studio si trova in Via Antonio Coppola 44, ad Agerola.',
     faq: [
-      ['Dove si trova lo studio di Qualiano?', 'In Via Canonico Migliaccio 18, 80019 Qualiano (NA). Trovi il link alle indicazioni stradali in questa pagina.'],
-      ['Quando riceve lo studio di Qualiano?', 'Il martedì dalle 9:00 alle 20:00, il mercoledì dalle 14:00 alle 20:00 e il sabato dalle 9:00 alle 13:00.'],
-      ['Come prenoto a Qualiano?', `Scrivimi su WhatsApp al ${PHONE} indicando che preferisci lo studio di Qualiano: ti rispondo con le disponibilità.`],
+      ['Dove si trova lo studio di Agerola?', 'In Via Antonio Coppola 44, 80051 Agerola (NA). Trovi il link alle indicazioni stradali in questa pagina.'],
+      ['Quando riceve lo studio di Agerola?', 'Il lunedì dalle 10:00 alle 20:00.'],
+      ['Come prenoto ad Agerola?', `Scrivimi su WhatsApp al ${PHONE} indicando che preferisci lo studio di Agerola: ti rispondo con le disponibilità.`],
     ],
   },
   caserta: {
     h1: 'Nutrizionista sportivo a <mark>Caserta</mark>',
     title: 'Nutrizionista sportivo a Caserta | Dott. Licciardiello',
-    desc: 'Nutrizionista sportivo a Caserta (San Nicola la Strada, Via Eugenio Montale 13): piani su misura per atleti e sportivi. Visite su appuntamento. Prenota ora.',
-    lead: 'Nello studio di San Nicola la Strada, alle porte di Caserta, ricevo su appuntamento atleti e sportivi che cercano un percorso di nutrizione sportiva personalizzato.',
+    desc: 'Nutrizionista sportivo a Caserta (San Nicola la Strada, Via Eugenio Montale 13): piani su misura per atleti e sportivi. Il giovedì dalle 10:00 alle 20:00. Prenota ora.',
+    lead: 'Nello studio di San Nicola la Strada, alle porte di Caserta, ricevo atleti e sportivi che cercano un percorso di nutrizione sportiva personalizzato.',
     near: 'Caserta, San Nicola la Strada, Marcianise, Maddaloni, Casagiove e Santa Maria Capua Vetere',
     access: 'Lo studio si trova in Via Eugenio Montale 13, a San Nicola la Strada (Caserta).',
     faq: [
       ['Dove si trova lo studio di Caserta?', 'In Via Eugenio Montale 13, 81020 San Nicola la Strada (CE), alle porte di Caserta. Trovi il link alle indicazioni stradali in questa pagina.'],
-      ['Quando riceve lo studio di Caserta?', 'Su appuntamento: scrivimi per concordare giorno e orario.'],
+      ['Quando riceve lo studio di Caserta?', 'Il giovedì dalle 10:00 alle 20:00.'],
       ['Come prenoto a Caserta?', `Scrivimi su WhatsApp al ${PHONE} indicando che preferisci lo studio di San Nicola la Strada (Caserta): ti rispondo con le disponibilità.`],
     ],
   },
@@ -605,7 +606,7 @@ for (const [k, c] of Object.entries(CITY)) {
             <a class="btn btn--line btn--lg" href="tel:${TEL}"${attr({ cta: 'city-hero', location: k })}>${ic('phone')}${PHONE}</a>
           </div>
         </div>
-        <div class="hero__art">${stage('../', `Il dott. Vincenzo Licciardiello, nutrizionista sportivo a ${s.place}`)}</div>
+        <div class="hero__art">${stage('../', `Il dott. Vincenzo Licciardiello, nutrizionista sportivo ${ad(s.place)}`)}</div>
       </div>
     </div>
   </section>
@@ -613,7 +614,7 @@ for (const [k, c] of Object.entries(CITY)) {
   <section class="sec">
     <div class="wrap local__grid">
       <div class="prose">
-        <h2 class="h2s">Nutrizione sportiva a ${s.place}: come lavoriamo</h2>
+        <h2 class="h2s">Nutrizione sportiva ${ad(s.place)}: come lavoriamo</h2>
         <p>Sono il dott. Vincenzo Licciardiello, nutrizionista sportivo. ${c.access} Seguo persone di ${c.near}.</p>
         <p>Non propongo diete generiche: ogni piano è costruito sul tuo sport, sui tuoi carichi di allenamento, sul calendario gare e sui tuoi obiettivi fisici.</p>
         <h3>La prima visita</h3>
@@ -632,7 +633,7 @@ for (const [k, c] of Object.entries(CITY)) {
       <aside class="local__aside">
         <div class="studio"><h3>Studio di ${s.place}</h3><address>${s.street}, ${s.zip} ${s.loc || s.name} (${s.region})</address><dl>${s.hours.map(([d, h]) => `<dt>${d}</dt><dd>${h}</dd>`).join('')}</dl><div class="studio__links"><a class="link" href="${mapsUrl(s)}" target="_blank" rel="noopener"${attr({ cta: 'city-aside', location: k })}>Indicazioni stradali</a></div></div>
         ${waBtn({ href: msg, label: 'Prenota su WhatsApp', cls: 'btn--primary btn--lg', cta: 'city-aside', location: k })}
-        <div class="studio"><h3>Altri studi</h3><ul class="chips">${others.map(([, o]) => `<li><a class="link" href="../${o.slug}/">Nutrizionista a ${o.place}</a></li>`).join('')}</ul></div>
+        <div class="studio"><h3>Altri studi</h3><ul class="chips">${others.map(([, o]) => `<li><a class="link" href="../${o.slug}/">Nutrizionista ${ad(o.place)}</a></li>`).join('')}</ul></div>
       </aside>
     </div>
   </section>
@@ -651,7 +652,7 @@ for (const [k, c] of Object.entries(CITY)) {
     <div class="wrap" style="text-align:center">
       <h2 style="margin-inline:auto">Smetti di improvvisare. Nutriti da atleta.</h2>
       <p class="sec__lead" style="margin-inline:auto">Scrivimi il tuo obiettivo e ti rispondo con le disponibilità dello studio di ${s.place}.</p>
-      <div style="margin-top:2rem">${waBtn({ href: msg, label: `Prenota a ${s.place}`, cls: 'btn--primary btn--lg', cta: 'city-final', location: k })}</div>
+      <div style="margin-top:2rem">${waBtn({ href: msg, label: `Prenota ${ad(s.place)}`, cls: 'btn--primary btn--lg', cta: 'city-final', location: k })}</div>
     </div>
   </section>
 </main>

@@ -38,8 +38,8 @@ Font locali con swap, caricamento prioritario del ritratto hero con preload resp
 | `/composizione-corporea/` | Obiettivi di peso e composizione corporea |
 | `/recupero-e-integrazione/` | Informazioni sul supporto nutrizionale al recupero |
 | `/prima-visita/` | Comprendere la visita e contattare il professionista |
-| `/nutrizionista-sportivo-pozzuoli/` | Sede reale di Pozzuoli |
-| `/nutrizionista-sportivo-qualiano/` | Sede reale di Qualiano |
+| `/nutrizionista-sportivo-villaricca/` | Sede reale di Villaricca |
+| `/nutrizionista-sportivo-agerola/` | Sede reale di Agerola |
 | `/nutrizionista-sportivo-caserta/` | Sede reale di San Nicola la Strada, vicino Caserta |
 
 Funnel: ricerca → homepage/pagina sede/servizio → comprensione → metodo e testimonianze esistenti → approfondimento → scelta sede → WhatsApp/telefono.

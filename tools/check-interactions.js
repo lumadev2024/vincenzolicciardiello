@@ -15,9 +15,9 @@ const element = (dataset = {}) => {
 };
 const burger = element(), nav = element(), status = element(), fallback = element(), hdr = element(), dock = element();
 const form = element({cta: 'form'}), name = element();
-form.elements = {nome: name, studio: {selectedOptions: [{dataset: {location: 'qualiano'}}]}};
+form.elements = {nome: name, studio: {selectedOptions: [{dataset: {location: 'agerola'}}]}};
 const events = [], opened = [];
-const values = {sport: 'corsa', obiettivo: 'Performance', studio: 'Qualiano', msg: 'test privato'};
+const values = {sport: 'corsa', obiettivo: 'Performance', studio: 'Agerola', msg: 'test privato'};
 const document = {
   body: element(),
   querySelector: s => ({'.burger': burger, '.header': hdr, '.dock': dock}[s] || null),
@@ -49,9 +49,9 @@ form.listeners.submit({preventDefault() {}});
 assert.equal(opened.length, 1);
 assert.equal(fallback.hidden, false);
 assert.ok(decodeURIComponent(opened[0][0]).includes('Nome di prova'));
-assert.ok(decodeURIComponent(opened[0][0]).includes('Qualiano'));
+assert.ok(decodeURIComponent(opened[0][0]).includes('Agerola'));
 assert.equal(events.filter(e => e.event === 'contact_form_submit').length, 1);
-assert.equal(events[0].location, 'qualiano');
+assert.equal(events[0].location, 'agerola');
 assert.ok(!JSON.stringify(events).includes('Nome di prova'));
 assert.ok(!JSON.stringify(events).includes('test privato'));
 form.listeners.submit({preventDefault() {}});
