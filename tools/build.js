@@ -20,6 +20,7 @@ const SOCIAL = {
   facebook: 'https://www.facebook.com/share/17cFGZrRC6/',
   tiktok: 'https://www.tiktok.com/@il.nutridoc',
   youtube: 'https://youtube.com/@il.nutridoc',
+  linkedin: 'https://www.linkedin.com/in/vincenzolicciardiello',
 };
 const PRIVACY = 'https://www.iubenda.com/privacy-policy/10830089';
 const COOKIE = 'https://www.iubenda.com/privacy-policy/10830089/cookie-policy';
@@ -144,7 +145,7 @@ const FAQ = [
 const faqHtml = (items, rv = true) => items.map(([q, a]) => `<details${rv ? ' class="rv"' : ''}><summary>${q}</summary><div><p>${a}</p></div></details>`).join('\n        ');
 
 // ---------- JSON-LD ----------
-const personLd = { '@type': 'Person', '@id': SITE + '/#vincenzo', name: 'Vincenzo Licciardiello', honorificPrefix: 'Dott.', jobTitle: 'Nutrizionista sportivo', url: SITE + '/', image: SITE + '/assets/dottore.webp', sameAs: Object.values(SOCIAL) };
+const personLd = { '@type': 'Person', '@id': SITE + '/#vincenzo', name: 'Vincenzo Licciardiello', honorificPrefix: 'Dott.', jobTitle: 'Nutrizionista sportivo', url: SITE + '/', image: SITE + '/assets/dottore.webp', description: 'Biologo nutrizionista specializzato in nutrizione sportiva.', knowsAbout: ['Nutrizione sportiva', 'Nutrizione clinica', 'Antropometria', 'Composizione corporea'], alumniOf: [{ '@type': 'CollegeOrUniversity', name: 'Università degli Studi di Napoli Federico II' }, { '@type': 'CollegeOrUniversity', name: 'Universitat Autònoma de Barcelona' }], sameAs: Object.values(SOCIAL) };
 const branchLd = (k) => {
   const s = STUDIOS[k];
   const o = {
@@ -200,7 +201,7 @@ ${SPRITE}
 <a class="skip" href="#main">Vai al contenuto</a>
 `;
 
-const header = (rel = '', light = false) => `<header class="header">
+const header = (rel = '', light = false, current = '') => `<header class="header">
   <div class="wrap header__in">
     <a class="logo" href="${rel || './'}" aria-label="${NAME}, home"><img src="${rel}assets/${light ? 'logo.webp' : 'logo-bianco.webp'}" width="${light ? '1282' : '800'}" height="${light ? '316' : '213'}" alt="${NAME}, nutrizionista sportivo"></a>
     <button class="burger" type="button" aria-label="Apri il menu" aria-expanded="false" aria-controls="nav">${ic('list')}</button>
@@ -209,7 +210,8 @@ const header = (rel = '', light = false) => `<header class="header">
         <li><a href="${rel}#servizi">Servizi</a></li>
         <li><a href="${rel}#metodo">Metodo</a></li>
         <li><a href="${rel}#pacchetti">Percorsi</a></li>
-        <li><a href="${rel}#studi">Studi</a></li>
+        <li><a href="${rel}#studi">Sedi</a></li>
+        <li><a href="${rel}chi-sono/"${current === 'chi-sono' ? ' aria-current="page"' : ''}>Chi sono</a></li>
         <li><a href="${rel}#faq">FAQ</a></li>
       </ul>
       <a class="btn btn--primary" href="${WA_GEN}" target="_blank" rel="noopener"${attr({ cta: 'header' })}>${ic('whatsapp-logo')}Prenota ora</a>
@@ -228,6 +230,7 @@ const footer = (rel = '') => `<footer class="footer">
           <a href="${SOCIAL.facebook}" target="_blank" rel="noopener" aria-label="Facebook">${ic('facebook-logo')}</a>
           <a href="${SOCIAL.tiktok}" target="_blank" rel="noopener" aria-label="TikTok">${ic('tiktok-logo')}</a>
           <a href="${SOCIAL.youtube}" target="_blank" rel="noopener" aria-label="YouTube">${ic('youtube-logo')}</a>
+          <a href="${SOCIAL.linkedin}" target="_blank" rel="noopener" aria-label="LinkedIn">${ic('linkedin-logo')}</a>
         </div>
       </div>
 ${Object.values(STUDIOS).map((s) => `      <div><h4>${s.place}</h4><address>${s.street}<br>${s.zip} ${s.loc || s.name} (${s.region})</address><ul>${s.hours.map(([d, h]) => `<li>${d}: ${h}</li>`).join('')}</ul><ul class="footer__links"><li><a href="${rel}${s.slug}/">Nutrizionista ${ad(s.place)}</a></li><li><a href="${mapsUrl(s)}" target="_blank" rel="noopener"${attr({ cta: 'footer', location: s.place.toLowerCase() })}>Indicazioni</a></li></ul></div>`).join('\n')}
@@ -235,7 +238,7 @@ ${Object.values(STUDIOS).map((s) => `      <div><h4>${s.place}</h4><address>${s.
     <div class="footer__grid footer__grid--2">
       <div><h4>Servizi</h4><ul>${Object.entries(SERVICES).map(([k, v]) => `<li><a href="${rel}${k}/">${v.short}</a></li>`).join('')}</ul></div>
       <div><h4>Contatti</h4><ul><li><a href="${wa('Buongiorno, vorrei informazioni.')}" target="_blank" rel="noopener"${attr({ cta: 'footer' })}>WhatsApp ${PHONE}</a></li><li><a href="tel:${TEL}"${attr({ cta: 'footer' })}>Chiama ${PHONE}</a></li><li><a href="mailto:${MAIL}"${attr({ cta: 'footer' })}>${MAIL}</a></li></ul></div>
-      <div><h4>Informazioni</h4><ul><li><a href="${PRIVACY}" target="_blank" rel="noopener">Privacy policy</a></li><li><a href="${COOKIE}" target="_blank" rel="noopener">Cookie policy</a></li></ul></div>
+      <div><h4>Informazioni</h4><ul><li><a href="${rel}chi-sono/">Chi sono</a></li><li><a href="${PRIVACY}" target="_blank" rel="noopener">Privacy policy</a></li><li><a href="${COOKIE}" target="_blank" rel="noopener">Cookie policy</a></li></ul></div>
     </div>
     <div class="footer__base"><span>© 2026 Vincenzo Licciardiello, nutrizionista sportivo · P.IVA ${VAT}</span></div>
   </div>
@@ -282,12 +285,13 @@ const home = head({
     </div>
   </section>
 
-  <section class="trust" aria-label="In sintesi">
+  <section class="trust" aria-label="Titoli ed esperienza">
     <ul class="wrap trust__list">
-      <li><b>3 studi</b><span>Villaricca, Agerola, Caserta</span></li>
-      <li><b>Visita completa</b><span>Plicometria e impedenziometria</span></li>
-      <li><b>Piano su misura</b><span>Calibrato su carichi e gare</span></li>
-      <li><b>3 percorsi</b><span>Bronzo, Silver, Gold</span></li>
+      <li><b>Master BarcaHUB</b><span>Sport Nutrition</span></li>
+      <li><b>Precision Nutrition</b><span>Nutrition and coaching</span></li>
+      <li><b>FIFA Football Medicine</b><span>Diploma FIFA</span></li>
+      <li><b>ISAK livello 1</b><span>Antropometria</span></li>
+      <li><b>Pallavolo</b><span>Collaborazioni con società campane</span></li>
     </ul>
   </section>
 
@@ -573,7 +577,7 @@ const CITY = {
   caserta: {
     h1: 'Nutrizionista sportivo a <mark>Caserta</mark>',
     title: 'Nutrizionista sportivo a Caserta | Dott. Licciardiello',
-    desc: 'Nutrizionista sportivo a Caserta (San Nicola la Strada, Via Eugenio Montale 13): piani su misura per atleti e sportivi. Il giovedì dalle 10:00 alle 20:00. Prenota ora.',
+    desc: 'Nutrizionista sportivo a Caserta (San Nicola la Strada, Via Eugenio Montale 13): piani su misura per atleti e sportivi. Giovedì 10:00-20:00. Prenota ora.',
     lead: 'Nello studio di San Nicola la Strada, alle porte di Caserta, ricevo atleti e sportivi che cercano un percorso di nutrizione sportiva personalizzato.',
     near: 'Caserta, San Nicola la Strada, Marcianise, Maddaloni, Casagiove e Santa Maria Capua Vetere',
     access: 'Lo studio si trova in Via Eugenio Montale 13, a San Nicola la Strada (Caserta).',
@@ -665,6 +669,110 @@ for (const [k, c] of Object.entries(CITY)) {
   write(`${s.slug}/index.html`, page);
 }
 
+// ============ CHI SONO ============
+{
+  const url = `${SITE}/chi-sono/`;
+  const title = 'Chi sono | Dott. Vincenzo Licciardiello, biologo nutrizionista';
+  const desc = 'Biologo nutrizionista, laurea in Scienze della Nutrizione Umana e Sport Nutrition. Esperienza con società di pallavolo. Studi a Villaricca, Agerola, Caserta.';
+  const msg = wa('Buongiorno Dott. Licciardiello, ho letto la sua presentazione sul sito e vorrei maggiori informazioni sul percorso di nutrizione sportiva.');
+  const ld = [siteLd,
+    { '@type': 'ProfilePage', '@id': url + '#page', url, name: title, isPartOf: { '@id': SITE + '/#site' }, mainEntity: { '@id': SITE + '/#vincenzo' }, inLanguage: 'it-IT' },
+    personLd, crumbLd([['Home', SITE + '/'], ['Chi sono', url]])];
+  const faq = [
+    ['Quali sono le tue qualifiche?', 'Sono biologo nutrizionista, con laurea magistrale in Scienze della Nutrizione Umana (Università Federico II di Napoli) e formazione in Sport Nutrition. Trovi titoli ed esperienze in questa pagina.'],
+    ['Di cosa si occupa un nutrizionista sportivo?', 'Costruisce un piano alimentare sul tuo sport, sui carichi di allenamento, sul calendario gare e sui tuoi obiettivi: energia, recupero e composizione corporea.'],
+    ['Posso scriverti prima di prenotare?', `Certo. Scrivimi su WhatsApp al ${PHONE}: puoi raccontarmi il tuo obiettivo e ti rispondo con le indicazioni per iniziare.`],
+    ['Dove ricevi i pazienti?', 'Negli studi di Villaricca, Agerola e San Nicola la Strada (Caserta). Trovi indirizzi e orari in fondo a questa pagina.'],
+  ];
+  const social = [['Instagram', SOCIAL.instagram], ['Facebook', SOCIAL.facebook], ['TikTok', SOCIAL.tiktok], ['YouTube', SOCIAL.youtube], ['LinkedIn', SOCIAL.linkedin]];
+  const page = head({ title, desc, canon: url, rel: '../', ld, preload: preloadDoc('../') }) + header('../', false, 'chi-sono') + `
+
+<main id="main">
+  <section class="hero">
+    <div class="wrap">
+      <nav class="crumbs" aria-label="Breadcrumb"><a href="../">Home</a> / Chi sono</nav>
+      <div class="hero__grid" style="grid-template-columns:1.1fr .9fr">
+        <div>
+          <span class="kicker">Biologo nutrizionista</span>
+          <h1>Chi sono: <mark>Vincenzo Licciardiello</mark></h1>
+          <p class="hero__sub">Biologo nutrizionista specializzato in nutrizione sportiva. Aiuto atleti e sportivi a costruire un'alimentazione che sostiene gli allenamenti, invece di ostacolarli.</p>
+          <div class="hero__cta">${waBtn({ href: msg, label: 'Scrivimi su WhatsApp', cls: 'btn--primary btn--lg', cta: 'about-hero' })}<a class="btn btn--line btn--lg" href="tel:${TEL}" style="color:#fff"${attr({ cta: 'about-hero' })}>${ic('phone')}${PHONE}</a></div>
+        </div>
+        <div class="hero__art">${stage('../', 'Il dott. Vincenzo Licciardiello, nutrizionista sportivo, a braccia incrociate')}</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="wrap local__grid">
+      <div class="prose">
+        <h2 class="h2s">Il mio approccio</h2>
+        <p>Sono il dott. Vincenzo Licciardiello, nutrizionista sportivo. Credo che l'alimentazione debba seguire il carico di lavoro: quello che mangi cambia con quanto ti alleni, con il calendario delle gare e con i tuoi obiettivi.</p>
+        <p>Per questo non propongo diete generiche, ma piani costruiti sulla tua disciplina. Niente soluzioni drastiche: percorsi sostenibili, che puoi mantenere nel tempo e che si integrano con l'allenamento.</p>
+        <h3>Formazione e titoli</h3>
+        <ul>
+          <li><b>2019–2021</b> · Laurea magistrale in Scienze della Nutrizione Umana (indirizzo medico), Università degli Studi di Napoli Federico II. Tesi in endocrinologia.</li>
+          <li><b>Master</b> · Master in Sport Nutrition, BarcaHUB.</li>
+          <li><b>2025–2026</b> · Diploma in Sport Nutrition, Universitat Autònoma de Barcelona.</li>
+          <li><b>2026</b> · Nutrition and coaching, Precision Nutrition.</li>
+          <li><b>2026</b> · FIFA Football Medicine, Fédération Internationale de Football Association (FIFA).</li>
+          <li><b>2025</b> · Antropometria livello 1, ISAK (International Society for the Advancement of Kinanthropometry).</li>
+        </ul>
+        <h3>Esperienza</h3>
+        <ul>
+          <li><b>Dal 2023</b> · Nutrizionista al Centro Previmed di Villaricca, di cui sono fondatore (centro per la prevenzione e la salute): valutazione dello stato nutrizionale, piani alimentari personalizzati, monitoraggio dei parametri clinici e gestione nutrizionale di pazienti con patologie croniche.</li>
+          <li><b>Dal 2023</b> · Nutrizionista sportivo per società di pallavolo, tra cui Phoenix Caivano Volley (dal settembre 2023) e Giugliano Volley (2023–2024), con più di 400 atleti seguiti nella performance e nel recupero.</li>
+          <li><b>2025–2026</b> · Docente di Scienze degli alimenti all'ITIS "Enrico Mattei" di Aversa.</li>
+          <li><b>2021</b> · Tirocinio in nutrizione clinica nel reparto di Endocrinologia dell'Azienda Ospedaliera Policlinico e collaborazione come biologo con un laboratorio di biologia molecolare dell'Università Federico II.</li>
+        </ul>
+        <h3>Come lavoro</h3>
+        <ol class="steps-list"><li><b>Ti ascolto.</b> Sport, ruolo, calendario gare, abitudini alimentari e obiettivi.</li><li><b>Analizzo il tuo corpo.</b> Plicometria e impedenziometria per fotografare il punto di partenza.</li><li><b>Creo il tuo piano.</b> Alimentazione calibrata sul tuo sport e sul tuo carico di lavoro.</li><li><b>Ti seguo nel tempo.</b> Controlli periodici per mantenere la condizione e gestire integrazione e recupero.</li></ol>
+        <p><a href="../prima-visita/">Scopri come si svolge la prima visita</a>.</p>
+        <h3>Con chi lavoro</h3>
+        <ul><li>Atleti agonisti e amatori</li><li>Sportivi di squadra e di discipline individuali</li><li>Chi vuole ripartire dopo uno stop o un infortunio</li><li>Chi vuole migliorare energia, recupero o composizione corporea</li></ul>
+        <p>Un esempio concreto è il <a href="../#caso-studio">caso di Matteo</a>, pallavolista: dopo un infortunio alla spalla e mesi di stop, un percorso graduale e sostenibile lo ha riportato in campo. I risultati sono sempre individuali e non garantiti.</p>
+        <h3>Di cosa mi occupo</h3>
+        <ul>${Object.entries(SERVICES).filter(([sk]) => sk !== 'prima-visita').map(([sk, sv]) => `<li><a href="../${sk}/">${sv.short}</a></li>`).join('')}</ul>
+        <h3>Dove ricevo</h3>
+        <ul>${Object.values(STUDIOS).map((s) => `<li><a href="../${s.slug}/">Studio di ${s.place}</a>, ${s.street}: ${s.hours.map(([d, h]) => `${d.toLowerCase()} ${h.replace(' - ', '–')}`).join(', ')}</li>`).join('')}</ul>
+        <h3>Mi trovi anche qui</h3>
+        <ul>${social.map(([n, u]) => `<li><a href="${u}" target="_blank" rel="noopener me"${attr({ cta: 'about-social', service: n.toLowerCase() })}>${n}</a></li>`).join('')}</ul>
+      </div>
+      <aside class="local__aside">
+        <div class="studio"><h3>Parliamone</h3><p>Scrivimi il tuo obiettivo: ti rispondo con le disponibilità degli studi.</p><div class="studio__cta">${waBtn({ href: msg, label: 'Scrivimi su WhatsApp', cta: 'about-aside' })}</div></div>
+        <div class="studio"><h3>Dove ricevo</h3><ul class="chips">${Object.values(STUDIOS).map((s) => `<li><a class="link" href="../${s.slug}/"${attr({ cta: 'related', location: s.place.toLowerCase() })}>Nutrizionista ${ad(s.place)}</a></li>`).join('')}</ul></div>
+        <div class="studio"><h3>Approfondisci</h3><ul class="chips">${relatedLinks(Object.keys(SERVICES), '../')}</ul></div>
+      </aside>
+    </div>
+  </section>
+
+  <section class="sec sec--tint" id="faq">
+    <div class="wrap">
+      <span class="eyebrow">Domande frequenti</span>
+      <h2>Prima di scrivermi</h2>
+      <div class="faq">
+        ${faqHtml(faq, false)}
+      </div>
+    </div>
+  </section>
+
+  <section class="sec sec--dark">
+    <div class="wrap" style="text-align:center">
+      <h2 style="margin-inline:auto">Smetti di improvvisare. Nutriti da atleta.</h2>
+      <p class="sec__lead" style="margin-inline:auto">Raccontami il tuo obiettivo e vediamo insieme se il mio percorso fa per te.</p>
+      <div style="margin-top:2rem">${waBtn({ href: msg, label: 'Prenota su WhatsApp', cls: 'btn--primary btn--lg', cta: 'about-final' })}</div>
+    </div>
+  </section>
+</main>
+
+` + footer('../') + `
+<script src="../main.js" defer></script>
+</body>
+</html>
+`;
+  write('chi-sono/index.html', page);
+}
+
 // ============ 404 ============
 write('404.html', head({ title: 'Pagina non trovata | Dott. Licciardiello', desc: 'La pagina cercata non esiste. Torna alla home del sito del Dott. Licciardiello.', canon: SITE + '/', ld: [], noindex: true, rel: '/' }) + header('/') + `
 <main id="main">
@@ -678,7 +786,7 @@ write('404.html', head({ title: 'Pagina non trovata | Dott. Licciardiello', desc
 
 // ============ sitemap / robots ============
 const today = new Date().toISOString().slice(0, 10);
-const urls = [['/', '1.0'], ...Object.keys(SERVICES).map((k) => [`/${k}/`, '0.8']), ...Object.values(STUDIOS).map((s) => [`/${s.slug}/`, '0.8'])];
+const urls = [['/', '1.0'], ...Object.keys(SERVICES).map((k) => [`/${k}/`, '0.8']), ...Object.values(STUDIOS).map((s) => [`/${s.slug}/`, '0.8']), ['/chi-sono/', '0.8']];
 write('sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls.map(([u, p]) => `  <url><loc>${SITE}${u}</loc><lastmod>${today}</lastmod><priority>${p}</priority></url>`).join('\n')}\n</urlset>\n`);
 write('robots.txt', `User-agent: *\nAllow: /\n\nSitemap: ${SITE}/sitemap.xml\n`);
-console.log('build ok:', 1 + Object.keys(SERVICES).length + Object.keys(CITY).length, 'pagine');
+console.log('build ok:', 2 + Object.keys(SERVICES).length + Object.keys(CITY).length, 'pagine');

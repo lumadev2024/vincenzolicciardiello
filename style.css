@@ -293,7 +293,7 @@ dialog::backdrop { background: rgb(5 15 9 / .7); backdrop-filter: blur(3px); }
 
 /* ---------- trust bar ---------- */
 .trust { background: var(--surface); border-bottom: 1px solid var(--line); }
-.trust__list { display: grid; grid-template-columns: repeat(4, 1fr); }
+.trust__list { display: grid; grid-template-columns: repeat(5, 1fr); }
 .trust__list li { padding: 1.5rem 1.25rem; display: grid; gap: .15rem; border-left: 1px solid var(--line); }
 .trust__list li:first-child { border-left: 0; padding-left: 0; }
 .trust__list b { font: 400 1.6rem/1.1 var(--display); text-transform: uppercase; letter-spacing: .012em; color: var(--green); }
@@ -302,7 +302,7 @@ dialog::backdrop { background: rgb(5 15 9 / .7); backdrop-filter: blur(3px); }
   .trust__list { grid-template-columns: 1fr 1fr; }
   .trust__list li, .trust__list li:first-child { padding: 1.1rem .5rem; border-left: 0; border-bottom: 1px solid var(--line); }
   .trust__list li:nth-child(odd) { border-right: 1px solid var(--line); }
-  .trust__list li:nth-last-child(-n+2) { border-bottom: 0; }
+  .trust__list li:last-child { grid-column: 1 / -1; border-right: 0; border-bottom: 0; }
   .trust__list b { font-size: 1.3rem; }
 }
 
@@ -400,4 +400,13 @@ dialog::backdrop { background: rgb(5 15 9 / .7); backdrop-filter: blur(3px); }
 }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }
+}
+
+/* ---------- header compatto tra tablet largo e desktop stretto (6 voci + CTA) ---------- */
+@media (min-width: 1101px) and (max-width: 1279px) {
+  .logo img { height: 76px; }
+  .header.is-solid .logo img { height: 60px; }
+  .nav, .nav__list { gap: 1.1rem; }
+  .nav__list a { font-size: .85rem; letter-spacing: .05em; }
+  .nav .btn { padding: .85rem 1.1rem; font-size: .85rem; }
 }
