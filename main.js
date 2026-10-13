@@ -130,3 +130,50 @@ if (location.protocol === 'file:') {
     a.pathname += 'index.html';
   });
 }
+// Carosello dei video: un video alla volta, frecce e elenco delle domande.
+// Parte da solo quando il video e' in vista, riparte con "Prossimo video" e si ferma quando si esce.
+document.querySelectorAll('[data-vcar]').forEach(root => {
+  const slides = [...root.querySelectorAll('.vslide')];
+  const items = [...root.querySelectorAll('[data-go]')];
+  const cur = root.querySelector('[data-cur]'), q = root.querySelector('[data-qt]'), d = root.querySelector('[data-dt]');
+  const sound = root.querySelector('[data-sound]');
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let i = 0, inView = false, userPaused = false;
+  const vid = () => slides[i].querySelector('video');
+  const track = (event) => { if (typeof emitConversion === 'function') emitConversion(event, root, {service: 'video-' + (i + 1)}); };
+  const syncSound = () => { const v = vid(); if (sound) sound.hidden = !(v && !v.paused && v.muted); };
+  const pauseAll = () => { slides.forEach(s => { const v = s.querySelector('video'); if (v && !v.paused) { v.dataset.ours = '1'; v.pause(); } }); syncSound(); };
+  // Prima con audio; se il browser lo blocca, parte muto e compare "Attiva l'audio".
+  const play = () => {
+    const v = vid(); if (!v) return;
+    userPaused = false; v.muted = false;
+    const p = v.play();
+    if (p && p.catch) p.catch(() => { v.muted = true; v.play().then(syncSound).catch(() => {}); });
+  };
+  const show = (n, byUser = true) => {
+    pauseAll();
+    i = (n + slides.length) % slides.length;
+    slides.forEach((s, k) => { s.hidden = k !== i; });
+    items.forEach((b, k) => b.setAttribute('aria-current', String(k === i)));
+    cur.textContent = String(i + 1); q.textContent = slides[i].dataset.q; d.textContent = slides[i].dataset.d;
+    if (byUser) { track('video_next'); play(); }
+  };
+  root.querySelector('[data-next]').addEventListener('click', () => show(i + 1));
+  root.querySelector('[data-prev]').addEventListener('click', () => show(i - 1));
+  items.forEach(b => b.addEventListener('click', () => show(Number(b.dataset.go))));
+  if (sound) sound.addEventListener('click', () => { const v = vid(); if (v) { v.muted = false; syncSound(); } });
+  slides.forEach((s, k) => {
+    const v = s.querySelector('video'); if (!v) return;
+    v.addEventListener('play', () => { i = k; syncSound(); }, {once: false});
+    v.addEventListener('playing', () => { if (!v.dataset.tracked) { v.dataset.tracked = '1'; track('video_play'); } });
+    v.addEventListener('pause', () => { if (v.dataset.ours) delete v.dataset.ours; else if (!v.ended) userPaused = true; syncSound(); });
+    v.addEventListener('volumechange', syncSound);
+    v.addEventListener('ended', syncSound);
+  });
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(entries => entries.forEach(en => {
+      if (en.intersectionRatio >= 0.5 && !inView) { inView = true; if (!reduce && !userPaused) play(); }
+      else if (en.intersectionRatio < 0.25 && inView) { inView = false; pauseAll(); userPaused = false; }
+    }), {threshold: [0, 0.25, 0.5, 0.75]}).observe(root.querySelector('.vcar__stage'));
+  }
+});

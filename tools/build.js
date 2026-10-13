@@ -131,6 +131,115 @@ const SERVICES = {
 };
 const serviceUrl = (k) => `${SITE}/${k}/`;
 
+// ---------- casi studio e video ----------
+const BUILD_DATE = new Date().toISOString().slice(0, 10);
+const VIDEOS = [
+  { n: 1, q: 'Può lo stress influenzare i miei risultati?', iso: 'PT1M14S', len: '1:14' },
+  { n: 2, q: 'Non riesco a dormire più di 4-5 ore a notte: cosa posso fare?', iso: 'PT1M11S', len: '1:11' },
+  { n: 3, q: 'Appena finisco di mangiare non mi sento sazio, anche se mangio molto', iso: 'PT59S', len: '0:59' },
+  { n: 4, q: 'Quanta massa muscolare possiamo mettere in un mese?', iso: 'PT1M30S', len: '1:30' },
+  { n: 5, q: 'Come deve gestire i carboidrati un atleta di sport di squadra?', iso: 'PT1M34S', len: '1:34' },
+].map((v) => ({ ...v, file: `assets/video-web/video-${v.n}.mp4`, poster: `assets/video-web/poster-${v.n}.webp`, d: `Il dott. Licciardiello risponde a una domanda dei pazienti: ${v.q}` }));
+
+const CASES = {
+  'pallavolista-lesione-menisco': {
+    n: 1, tag: 'Pallavolista, 16 anni',
+    title: 'Caso studio: pallavolista dopo lesione al menisco',
+    short: 'Pallavolista dopo lesione al menisco',
+    desc: 'Caso studio di nutrizione clinica e sportiva: pallavolista di 16 anni, recupero dopo lesione al menisco, peso e prestazione. Piano di 16 settimane.',
+    h1: 'Recupero dopo lesione al menisco e <mark>gestione del peso</mark>',
+    lead: 'Il percorso nutrizionale di una giovane pallavolista: stanchezza persistente, difficoltà con il peso e un piano di 16 settimane per tornare in campo meglio di prima.',
+    stat: { big: '−13,2 kg', small: '82,2 → 69 kg' },
+    cardText: 'Pallavolista di 16 anni, recupero dopo lesione al menisco: peso sceso a 69 kg e salto migliorato di 8 cm.',
+    facts: [['Paziente', 'Donna, 16 anni, pallavolista'], ['Motivo della visita', 'Recupero dopo lesione al menisco, stanchezza persistente, difficoltà nella gestione del peso'], ['Durata del piano', '16 settimane di monitoraggio progressivo'], ['Risultato', 'Peso fino a 69 kg, salto +8 cm']],
+    valutazione: [['Antropometria', 'Peso 82,2 kg · altezza 157 cm · circonferenza vita 84 cm · circonferenza fianchi 118 cm'], ['Abitudini alimentari', 'Carboidrati raffinati, scarsa frutta e verdura, pasti irregolari'], ['Esami di laboratorio', 'Glicemia 92 · LDL 121 · trigliceridi 130 · vitamina D 22'], ['Segni clinici', 'Stanchezza durante gli allenamenti, scarso rendimento']],
+    diagnosi: [['Diagnosi chiave', 'malnutrizione proteica e carenza di micronutrienti.'], ['Condizioni correlate', 'scarso recupero muscolare.'], ['Raccomandazioni', 'aumento delle proteine, riduzione degli zuccheri semplici, più sonno, corretta gestione dei pasti.'], ['Supplementi', 'vitamina D e bevanda energetica durante gli allenamenti intensi.'], ['Stile di vita', 'migliorare la qualità del sonno e aumentare l\'attività fisica quotidiana.'], ['Fasi dell\'intervento', '16 settimane di monitoraggio progressivo.']],
+    risultati: ['Riduzione del peso corporeo fino a 69 kg a luglio.', 'Netto miglioramento della prestazione sportiva, in particolare un aumento del salto di 8 cm.', 'Elevata adesione al piano dietetico e feedback positivo durante i follow-up.'],
+    prossimi: 'Continuare il monitoraggio mensile, ripetere i test fisici tra 3 mesi e adattare l\'alimentazione alle fasi del campionato.',
+    wa: 'Buongiorno, ho letto il caso studio sul recupero dopo lesione al menisco e vorrei informazioni su un percorso per una giovane atleta.',
+  },
+  'obesita-fame-nervosa': {
+    n: 2, tag: 'Donna, 48 anni',
+    title: 'Caso studio: obesità e fame nervosa in 48 settimane',
+    short: 'Obesità e fame nervosa',
+    desc: 'Caso studio di nutrizione clinica: obesità legata a stress e fame nervosa in una donna di 48 anni. Percorso di 48 settimane, da 105 a 82 kg.',
+    h1: 'Obesità e <mark>fame nervosa</mark>: un percorso di 48 settimane',
+    lead: 'Il percorso nutrizionale di una donna con obesità legata allo stress: gestione della fame nervosa, movimento quotidiano e pasti liberi senza sensi di colpa.',
+    stat: { big: '−23 kg', small: '105 → 82 kg' },
+    cardText: 'Donna di 48 anni con obesità e fame nervosa: in 48 settimane da 105 a 82 kg, con una forte riduzione del binge eating.',
+    facts: [['Paziente', 'Donna, 48 anni, casalinga'], ['Motivo della visita', 'Obesità, ernia del disco, pre-menopausa, fame nervosa'], ['Durata del piano', '48 settimane di percorso mirato'], ['Risultato', 'Peso fino a 82 kg, binge eating ridotto in modo drastico']],
+    valutazione: [['Antropometria', 'Peso 105 kg · altezza 160 cm · circonferenza vita 97,5 cm · circonferenza fianchi 125 cm'], ['Abitudini alimentari', 'Farine raffinate, poca verdura, nessuna attività fisica'], ['Esami di laboratorio', 'Glicemia 118 · LDL 132 · trigliceridi 164 · vitamina D 34'], ['Segni clinici', 'Fame nervosa, incapacità di gestire i pasti liberi']],
+    diagnosi: [['Diagnosi chiave', 'obesità clinica in funzione di stress elevato.'], ['Condizioni correlate', 'pochissimo movimento, esami ematici alterati.'], ['Raccomandazioni', 'equilibrio dei macronutrienti durante i pasti, mindful eating, educazione alimentare.'], ['Supplementi', 'omega-3 e polifenoli.'], ['Stile di vita', 'camminata quotidiana di almeno 20 minuti e un momento per sé stessa durante la giornata.'], ['Fasi dell\'intervento', '48 settimane di percorso mirato a risolvere, in particolare, la gestione della fame nervosa.']],
+    risultati: ['Riduzione del peso fino a 82 kg a settembre.', 'Più movimento grazie alle passeggiate quotidiane.', 'Gestione ottima dei pasti liberi e riduzione drastica del cosiddetto "binge eating": durante le vacanze estive ha perso 1,5 kg.'],
+    prossimi: 'Continuare con supporto e assistenza costanti nel processo di dimagrimento, introdurre attività fisica contro resistenza e consolidare la capacità di gestire gli "sgarri".',
+    wa: 'Buongiorno, ho letto il caso studio su obesità e fame nervosa e vorrei informazioni su un percorso di dimagrimento.',
+  },
+  'anoressia-percorso-nutrizionale': {
+    n: 3, tag: 'Donna, 25 anni',
+    title: 'Caso studio: anoressia e percorso nutrizionale',
+    short: 'Anoressia e percorso nutrizionale',
+    desc: 'Caso studio di nutrizione clinica: anoressia e paura del cibo in una donna di 25 anni. Un percorso su due anni, prima comportamentale poi nutrizionale.',
+    h1: 'Anoressia e paura del cibo: un percorso <mark>nutrizionale e comportamentale</mark>',
+    lead: 'Il percorso di una giovane donna con anoressia e paura del cibo: un primo anno di lavoro psicologico e comportamentale, un secondo anno per ritrovare un peso e un equilibrio sostenibili.',
+    stat: { big: '2 anni', small: 'di percorso graduale' },
+    cardText: 'Donna di 25 anni con anoressia e paura del cibo: un percorso di due anni, prima comportamentale poi nutrizionale.',
+    facts: [['Paziente', 'Donna, 25 anni, studentessa'], ['Motivo della visita', 'Vita sedentaria, amenorrea, paura del cibo (citofobia)'], ['Durata del piano', 'Due anni: il primo di lavoro comportamentale, il secondo di recupero del peso'], ['Risultato', 'Peso in aumento, più attività fisica e più vita sociale']],
+    valutazione: [['Abitudini alimentari', 'Quantità molto basse; evita completamente zuccheri e grassi'], ['Segni clinici', 'Spesso digiuna per giorni, bulimica, evita occasioni sociali dove rischia di mangiare di più']],
+    diagnosi: [['Diagnosi chiave', 'anoressia.'], ['Condizioni correlate', 'paura del cibo, rinuncia alle occasioni sociali, scarsa capacità di stare con gli altri.'], ['Raccomandazioni', 'introdurre uno sport e migliorare il rapporto con il cibo, anche con quello "spazzatura".'], ['Supplementi', 'creatina e whey protein.'], ['Stile di vita', 'palestra almeno tre volte a settimana e uscita libera nel weekend, senza vincoli alimentari.'], ['Fasi dell\'intervento', 'primo anno di lavoro a livello psicologico e comportamentale; secondo anno dedicato all\'aumento di peso.']],
+    risultati: ['Aumento di peso e netto miglioramento della composizione corporea.', 'Palestra con almeno tre allenamenti a settimana, seguiti da un personal trainer.', 'Più attività ricreative e sociali, e più libertà nel mangiare anche cibi "spazzatura".', 'Restano momenti di forte stress che la inducono ancora a digiunare: è su questo che si continua a lavorare.'],
+    prossimi: 'Continuare con supporto e assistenza costanti, in particolare per evitare sfoghi sul cibo dopo episodi negativi della vita quotidiana. Aumentare ancora il peso fino a un equilibrio ormonale e mantenere l\'attività fisica, magari inserendo uno sport di squadra.',
+    support: true,
+    wa: 'Buongiorno, ho letto il caso studio sull\'anoressia e vorrei parlare con lei della mia situazione.',
+  },
+};
+const caseUrl = (k) => `${SITE}/casi-studio/${k}/`;
+
+// sezione "casi studio" della home: carosello di video + tre casi
+const vcarHtml = () => `<div class="vcar rv" role="region" aria-roledescription="carosello" aria-label="Video: il dottore risponde alle domande dei pazienti" data-vcar data-cta="video">
+        <div class="vcar__stage">
+          <button class="vcar__sound" type="button" data-sound hidden>Attiva l'audio</button>
+${VIDEOS.map((v, i) => `          <figure class="vslide"${i ? ' hidden' : ''} data-q="${v.q}" data-d="${v.d}"><video controls playsinline preload="none" poster="${v.poster}" width="720" height="1280" aria-label="${v.q}"><source src="${v.file}" type="video/mp4"></video></figure>`).join('\n')}
+        </div>
+        <div class="vcar__info">
+          <p class="vcar__count" aria-live="polite">Video <span data-cur>1</span> di ${VIDEOS.length}</p>
+          <h3 class="vcar__q" data-qt>${VIDEOS[0].q}</h3>
+          <p class="vcar__d" data-dt>${VIDEOS[0].d}</p>
+          <div class="vcar__nav">
+            <button class="vcar__btn vcar__btn--prev" type="button" data-prev aria-label="Video precedente">${ic('arrow-right')}</button>
+            <button class="btn btn--primary" type="button" data-next>Prossimo video ${ic('arrow-right')}</button>
+          </div>
+          <ol class="vcar__list">
+${VIDEOS.map((v, i) => `            <li><button type="button" data-go="${i}"${i ? '' : ' aria-current="true"'}><span>${i + 1}</span>${v.q}<em>${v.len}</em></button></li>`).join('\n')}
+          </ol>
+          <div class="vcar__cta">${waBtn({ href: wa('Buongiorno Dott. Licciardiello, ho visto i suoi video e avrei una domanda.'), label: 'Hai una domanda? Scrivimi', cls: 'btn--line btn--light', cta: 'video' })}</div>
+        </div>
+        <noscript><style>.vslide[hidden]{display:block!important}</style></noscript>
+      </div>`;
+
+const caseCard = (k, c, rel) => `<article class="ccard rv" style="--i:${c.n - 1}">
+          <span class="ccard__tag">Caso ${c.n} · ${c.tag}</span>
+          <p class="ccard__stat"><b>${c.stat.big}</b><span>${c.stat.small}</span></p>
+          <h3>${c.short}</h3>
+          <p>${c.cardText}</p>
+          <a class="link" href="${rel}casi-studio/${k}/"${attr({ cta: 'case-card', service: k })}>Leggi il caso studio ${ic('arrow-right')}</a>
+        </article>`;
+
+const casiSection = () => `  <section class="sec sec--dark" id="casi-studio">
+    <div class="wrap">
+      <span class="eyebrow rv">Casi studio</span>
+      <h2 class="rv">Casi studio: percorsi reali e risposte chiare</h2>
+      <p class="sec__lead rv">Guarda i video in cui rispondo alle domande più frequenti e leggi tre casi studio di nutrizione clinica e sportiva, con valutazione, piano e risultati.</p>
+      ${vcarHtml()}
+      <div class="cases__head rv"><h3>Tre casi studio, dalla valutazione ai risultati</h3><a class="link" href="casi-studio/"${attr({ cta: 'case-card' })}>Tutti i casi studio ${ic('arrow-right')}</a></div>
+      <div class="cases">
+        ${Object.entries(CASES).map(([k, c]) => caseCard(k, c, '')).join('\n        ')}
+      </div>
+      <p class="cases__note rv">Casi presentati in forma anonima. I risultati sono individuali e non garantiti.</p>
+    </div>
+  </section>
+
+`;
+
 // ---------- FAQ home ----------
 const FAQ = [
   ['Cosa fa un nutrizionista sportivo?', 'Costruisce un piano alimentare sul tuo sport, sui tuoi carichi di allenamento, sul calendario gare e sui tuoi obiettivi: energia, recupero e composizione corporea. Non una dieta generica, ma una strategia che segue quello che fai davvero.'],
@@ -203,7 +312,7 @@ ${SPRITE}
 
 const header = (rel = '', light = false, current = '') => `<header class="header">
   <div class="wrap header__in">
-    <a class="logo" href="${rel || './'}" aria-label="${NAME}, home"><img src="${rel}assets/${light ? 'logo.webp' : 'logo-bianco.webp'}" width="${light ? '1282' : '800'}" height="${light ? '316' : '213'}" alt="${NAME}, nutrizionista sportivo"></a>
+    <a class="logo" href="${rel || './'}" aria-label="${NAME}, home"><img src="${rel}assets/${light ? 'logo-scuro.webp' : 'logo-chiaro.webp'}" width="1000" height="253" alt="${NAME}, nutrizionista sportivo"></a>
     <button class="burger" type="button" aria-label="Apri il menu" aria-expanded="false" aria-controls="nav">${ic('list')}</button>
     <nav class="nav" id="nav" aria-label="Principale">
       <ul class="nav__list">
@@ -223,7 +332,7 @@ const footer = (rel = '') => `<footer class="footer">
   <div class="wrap">
     <div class="footer__grid">
       <div class="footer__brand">
-        <img src="${rel}assets/logo-bianco.webp" width="800" height="213" alt="${NAME}" loading="lazy">
+        <img src="${rel}assets/logo-chiaro.webp" width="1000" height="253" alt="${NAME}" loading="lazy">
         <p>Nutrizione sportiva personalizzata per atleti e sportivi in provincia di Napoli e Caserta.</p>
         <div class="social">
           <a href="${SOCIAL.instagram}" target="_blank" rel="noopener" aria-label="Instagram">${ic('instagram-logo')}</a>
@@ -238,7 +347,7 @@ ${Object.values(STUDIOS).map((s) => `      <div><h4>${s.place}</h4><address>${s.
     <div class="footer__grid footer__grid--2">
       <div><h4>Servizi</h4><ul>${Object.entries(SERVICES).map(([k, v]) => `<li><a href="${rel}${k}/">${v.short}</a></li>`).join('')}</ul></div>
       <div><h4>Contatti</h4><ul><li><a href="${wa('Buongiorno, vorrei informazioni.')}" target="_blank" rel="noopener"${attr({ cta: 'footer' })}>WhatsApp ${PHONE}</a></li><li><a href="tel:${TEL}"${attr({ cta: 'footer' })}>Chiama ${PHONE}</a></li><li><a href="mailto:${MAIL}"${attr({ cta: 'footer' })}>${MAIL}</a></li></ul></div>
-      <div><h4>Informazioni</h4><ul><li><a href="${rel}chi-sono/">Chi sono</a></li><li><a href="${PRIVACY}" target="_blank" rel="noopener">Privacy policy</a></li><li><a href="${COOKIE}" target="_blank" rel="noopener">Cookie policy</a></li></ul></div>
+      <div><h4>Informazioni</h4><ul><li><a href="${rel}chi-sono/">Chi sono</a></li><li><a href="${rel}casi-studio/">Casi studio</a></li><li><a href="${PRIVACY}" target="_blank" rel="noopener">Privacy policy</a></li><li><a href="${COOKIE}" target="_blank" rel="noopener">Cookie policy</a></li></ul></div>
     </div>
     <div class="footer__base"><span>© 2026 Vincenzo Licciardiello, nutrizionista sportivo · P.IVA ${VAT}</span></div>
   </div>
@@ -258,7 +367,8 @@ const waBtn = ({ href, label, cls = 'btn--primary', cta, service, location, icon
 const write = (rel, content) => { const f = path.join(ROOT, rel); fs.mkdirSync(path.dirname(f), { recursive: true }); fs.writeFileSync(f, content); };
 
 // ============ HOME ============
-const homeLd = [siteLd, webPageLd(SITE + '/', 'Nutrizionista sportivo a Villaricca, Agerola e Caserta'), personLd, branchLd('villaricca'), branchLd('agerola'), branchLd('caserta')];
+const homeLd = [siteLd, webPageLd(SITE + '/', 'Nutrizionista sportivo a Villaricca, Agerola e Caserta'), personLd, branchLd('villaricca'), branchLd('agerola'), branchLd('caserta'),
+  ...VIDEOS.map((v) => ({ '@type': 'VideoObject', '@id': `${SITE}/#video-${v.n}`, name: v.q, description: v.d, thumbnailUrl: `${SITE}/${v.poster}`, uploadDate: BUILD_DATE, duration: v.iso, contentUrl: `${SITE}/${v.file}`, inLanguage: 'it-IT', author: { '@id': SITE + '/#vincenzo' } }))];
 
 const home = head({
   title: 'Nutrizionista sportivo | Dott. Licciardiello',
@@ -351,13 +461,13 @@ ${Object.entries(SERVICES).map(([k, v], i) => `        <article class="card rv" 
           <p>Dopo un infortunio serio alla spalla, un intervento e mesi di stop, avevo perso ritmo, fiducia e controllo. E avevo preso molto peso. Ho deciso di non "provare", ma di cambiare direzione.</p>
           <p>Niente soluzioni drastiche: un'alimentazione completa, sostenibile, integrata con l'allenamento. Mese dopo mese mi sono sentito più forte, più leggero, più sicuro. In campo e fuori.</p>
         </div>
-        <div class="case__actions rv"><button class="btn btn--line btn--light" type="button" data-open="analisi">${ic('arrow-up-right')}Leggi l'analisi del dottore</button></div>
+        <div class="case__actions rv"><button class="btn btn--line btn--light" type="button" data-open="analisi">${ic('arrow-up-right')}Leggi l'analisi del dottore</button> <a class="link link--light" href="#casi-studio"${attr({ cta: 'case-more' })}>Altri casi studio ${ic('arrow-right')}</a></div>
         <p class="case__note rv">Risultati individuali, non garantiti. Ogni percorso dipende dalla persona e dal suo punto di partenza.</p>
       </div>
     </div>
   </section>
 
-  <section class="sec" id="recensioni">
+${casiSection()}  <section class="sec" id="recensioni">
     <div class="wrap">
       <span class="eyebrow rv">Cosa dicono i pazienti</span>
       <h2 class="rv">L'esperienza di chi si è fatto seguire</h2>
@@ -669,6 +779,122 @@ for (const [k, c] of Object.entries(CITY)) {
   write(`${s.slug}/index.html`, page);
 }
 
+// ============ CASI STUDIO: indice e pagine dedicate ============
+{
+  const hubUrl = `${SITE}/casi-studio/`;
+  const hubTitle = 'Casi studio di nutrizione sportiva e clinica';
+  const hubDesc = 'Tre casi studio del dott. Licciardiello: lesione al menisco in una pallavolista, obesità e fame nervosa, anoressia. Valutazione, piano e risultati.';
+  const hubLd = [siteLd, webPageLd(hubUrl, hubTitle), personLd, crumbLd([['Home', SITE + '/'], ['Casi studio', hubUrl]]),
+    { '@type': 'ItemList', itemListElement: Object.entries(CASES).map(([k, c], i) => ({ '@type': 'ListItem', position: i + 1, url: caseUrl(k), name: c.short })) }];
+  const hub = head({ title: hubTitle, desc: hubDesc, canon: hubUrl, rel: '../', ld: hubLd, body: ' class="page--internal"' }) + header('../', true) + `
+
+<main id="main">
+  <section class="hero">
+    <div class="wrap">
+      <nav class="crumbs" aria-label="Breadcrumb"><a href="../">Home</a> / Casi studio</nav>
+      <div class="hero__grid hero__grid--solo">
+        <div>
+          <span class="kicker">Casi studio</span>
+          <h1>Casi studio di <mark>nutrizione sportiva e clinica</mark></h1>
+          <p class="hero__sub">Tre percorsi reali, presentati in forma anonima: come parto dalla valutazione, come costruisco il piano e che cosa succede nel tempo. I risultati sono individuali e non garantiti.</p>
+          <div class="hero__cta">${waBtn({ href: WA_GEN, label: 'Parlami del tuo caso', cls: 'btn--primary btn--lg', cta: 'cases-hero' })}</div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="sec">
+    <div class="wrap">
+      <div class="cases cases--light">
+        ${Object.entries(CASES).map(([k, c]) => caseCard(k, c, '../')).join('\n        ')}
+      </div>
+      <p class="note" style="margin-top:2rem">Cerchi un altro esempio? Leggi il <a href="../#caso-studio">caso di Matteo, pallavolista</a>, o guarda i <a href="../#casi-studio">video in cui rispondo alle domande dei pazienti</a>.</p>
+    </div>
+  </section>
+  <section class="sec sec--dark">
+    <div class="wrap" style="text-align:center">
+      <h2 style="margin-inline:auto">Smetti di improvvisare. Nutriti da atleta.</h2>
+      <p class="sec__lead" style="margin-inline:auto">Raccontami il tuo obiettivo: ti rispondo con le disponibilità degli studi.</p>
+      <div style="margin-top:2rem">${waBtn({ href: WA_GEN, label: 'Prenota su WhatsApp', cls: 'btn--primary btn--lg', cta: 'cases-final' })}</div>
+    </div>
+  </section>
+</main>
+
+` + footer('../') + `
+<script src="../main.js" defer></script>
+</body>
+</html>
+`;
+  write('casi-studio/index.html', hub);
+
+  for (const [k, c] of Object.entries(CASES)) {
+    const url = caseUrl(k);
+    const ld = [siteLd, webPageLd(url, c.title), personLd, crumbLd([['Home', SITE + '/'], ['Casi studio', hubUrl], [c.short, url]]),
+      { '@type': 'Article', '@id': url + '#article', headline: c.short, description: c.desc, url, inLanguage: 'it-IT', datePublished: BUILD_DATE, dateModified: BUILD_DATE, author: { '@id': SITE + '/#vincenzo' }, publisher: { '@id': SITE + '/#vincenzo' }, mainEntityOfPage: url, image: SITE + '/assets/og-image.jpg' }];
+    const others = Object.entries(CASES).filter(([o]) => o !== k);
+    const page = head({ title: c.title, desc: c.desc, canon: url, rel: '../../', ld, body: ' class="page--internal"' + attr({ service: k }) }) + header('../../', true) + `
+
+<main id="main">
+  <section class="hero">
+    <div class="wrap">
+      <nav class="crumbs" aria-label="Breadcrumb"><a href="../../">Home</a> / <a href="../">Casi studio</a> / ${c.short}</nav>
+      <div class="hero__grid">
+        <div>
+          <span class="kicker">Caso studio ${c.n} · ${c.tag}</span>
+          <h1>${c.h1}</h1>
+          <p class="hero__sub">${c.lead}</p>
+          <div class="hero__cta">${waBtn({ href: wa(c.wa), label: 'Parlami del tuo caso', cls: 'btn--primary btn--lg', cta: 'case-hero', service: k })}<a class="btn btn--line btn--lg" href="tel:${TEL}"${attr({ cta: 'case-hero', service: k })}>${ic('phone')}${PHONE}</a></div>
+        </div>
+        <aside class="hero__art casefacts" aria-label="Il caso in sintesi">
+          <h2>Il caso in sintesi</h2>
+          <p class="casefacts__stat"><b>${c.stat.big}</b><span>${c.stat.small}</span></p>
+          <dl>${c.facts.map(([a, b]) => `<dt>${a}</dt><dd>${b}</dd>`).join('')}</dl>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="wrap local__grid">
+      <article class="prose">
+        <h2 class="h2s">Paziente e valutazione</h2>
+        <p>Panoramica del paziente e del contesto della visita nutrizionale.</p>
+        <dl class="case__dl">${c.valutazione.map(([a, b]) => `<dt>${a}</dt><dd>${b}</dd>`).join('')}</dl>
+        <h2 class="h2s">Diagnosi nutrizionale e piano di intervento</h2>
+        <ol class="steps-list">${c.diagnosi.map(([a, b]) => `<li><b>${a}:</b> ${b}</li>`).join('')}</ol>
+        <h2 class="h2s">Risultati e conclusioni</h2>
+        <ul>${c.risultati.map((r) => `<li>${r}</li>`).join('')}</ul>
+        <h3>Prossimi passi e monitoraggio continuo</h3>
+        <p>${c.prossimi}</p>
+        <blockquote class="case__quote2">"La salute è un viaggio, non una destinazione: ogni piccolo passo conta."</blockquote>
+        ${c.support ? '<p class="note"><b>Se ti riconosci in questa situazione</b>, parlane con il tuo medico di fiducia o con uno specialista: i disturbi del comportamento alimentare vanno affrontati con un approccio multidisciplinare.</p>' : ''}
+        <p class="note">Caso presentato in forma anonima: non sono riportati il nome né altri dati identificativi. I risultati sono individuali e non garantiti; queste informazioni non sostituiscono il parere del medico.</p>
+      </article>
+      <aside class="local__aside">
+        <div class="studio"><h3>Ti riconosci in questa storia?</h3><p>Scrivimi su WhatsApp: ti rispondo con le disponibilità degli studi di Villaricca, Agerola e Caserta.</p><div class="studio__cta">${waBtn({ href: wa(c.wa), label: 'Scrivimi su WhatsApp', cta: 'case-aside', service: k })}</div></div>
+        <div class="studio"><h3>Altri casi studio</h3><ul class="chips">${others.map(([ok, oc]) => `<li><a class="link" href="../${ok}/"${attr({ cta: 'related', service: ok })}>${oc.short}</a></li>`).join('')}</ul></div>
+        <div class="studio"><h3>Approfondisci</h3><ul class="chips"><li><a class="link" href="../../prima-visita/"${attr({ cta: 'related', service: 'prima-visita' })}>La prima visita</a></li><li><a class="link" href="../../composizione-corporea/"${attr({ cta: 'related', service: 'composizione-corporea' })}>Composizione corporea</a></li><li><a class="link" href="../../chi-sono/"${attr({ cta: 'related' })}>Chi sono</a></li></ul></div>
+      </aside>
+    </div>
+  </section>
+
+  <section class="sec sec--dark">
+    <div class="wrap" style="text-align:center">
+      <h2 style="margin-inline:auto">Raccontami il tuo caso</h2>
+      <p class="sec__lead" style="margin-inline:auto">Ogni percorso parte da una visita completa: ascolto, valutazione e un piano costruito su di te.</p>
+      <div style="margin-top:2rem">${waBtn({ href: wa(c.wa), label: 'Prenota su WhatsApp', cls: 'btn--primary btn--lg', cta: 'case-final', service: k })}</div>
+    </div>
+  </section>
+</main>
+
+` + footer('../../') + `
+<script src="../../main.js" defer></script>
+</body>
+</html>
+`;
+    write(`casi-studio/${k}/index.html`, page);
+  }
+}
+
 // ============ CHI SONO ============
 {
   const url = `${SITE}/chi-sono/`;
@@ -786,7 +1012,7 @@ write('404.html', head({ title: 'Pagina non trovata | Dott. Licciardiello', desc
 
 // ============ sitemap / robots ============
 const today = new Date().toISOString().slice(0, 10);
-const urls = [['/', '1.0'], ...Object.keys(SERVICES).map((k) => [`/${k}/`, '0.8']), ...Object.values(STUDIOS).map((s) => [`/${s.slug}/`, '0.8']), ['/chi-sono/', '0.8']];
+const urls = [['/', '1.0'], ...Object.keys(SERVICES).map((k) => [`/${k}/`, '0.8']), ...Object.values(STUDIOS).map((s) => [`/${s.slug}/`, '0.8']), ['/chi-sono/', '0.8'], ['/casi-studio/', '0.7'], ...Object.keys(CASES).map((k) => [`/casi-studio/${k}/`, '0.7'])];
 write('sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls.map(([u, p]) => `  <url><loc>${SITE}${u}</loc><lastmod>${today}</lastmod><priority>${p}</priority></url>`).join('\n')}\n</urlset>\n`);
 write('robots.txt', `User-agent: *\nAllow: /\n\nSitemap: ${SITE}/sitemap.xml\n`);
 console.log('build ok:', 2 + Object.keys(SERVICES).length + Object.keys(CITY).length, 'pagine');
