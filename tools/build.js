@@ -6,7 +6,6 @@ const path = require('path');
 
 const ROOT = path.join(__dirname, '..');
 const SPRITE = fs.readFileSync(path.join(__dirname, 'partials/sprite.html'), 'utf8').trim();
-const DIALOG = fs.readFileSync(path.join(__dirname, 'partials/dialog-analisi.html'), 'utf8').trim();
 
 // ---------- dati ----------
 const SITE = 'https://www.dottlicciardiello.it';
@@ -75,7 +74,7 @@ const SERVICES = {
 <h3>Niente soluzioni drastiche</h3>
 <p>Il percorso è sostenibile e integrato con l'allenamento. L'obiettivo è costruire abitudini che puoi mantenere, evitando stravolgimenti inutili che penalizzano energia e recupero.</p>
 <h3>Un esempio concreto</h3>
-<p>Nel caso di Matteo, pallavolista dopo un infortunio alla spalla, la prima fase è stata una dieta ipocalorica moderata con periodizzazione settimanale dei carboidrati, per ridurre peso e massa grassa senza compromettere la prestazione in gara. <a href="../#caso-studio">Leggi il caso studio</a>.</p>
+<p>Nel caso di Matteo, pallavolista dopo un infortunio alla spalla, la prima fase è stata una dieta ipocalorica moderata con periodizzazione settimanale dei carboidrati, per ridurre peso e massa grassa senza compromettere la prestazione in gara. <a href="../casi-studio/">Leggi i casi studio</a>.</p>
 <p class="note">Risultati individuali, non garantiti: dipendono dalla persona e dal suo punto di partenza.</p>`,
     faq: [
       ['Posso dimagrire senza perdere forza?', 'È l\'obiettivo del percorso: ridurre la massa grassa mantenendo il più possibile energia e prestazione, con un piano calibrato sugli allenamenti. Gli esiti sono individuali.'],
@@ -450,23 +449,6 @@ ${Object.entries(SERVICES).map(([k, v], i) => `        <article class="card rv" 
     </div>
   </section>
 
-  <section class="sec sec--green" id="caso-studio">
-    <div class="wrap case__grid">
-      <div class="case__photo rv"><img src="assets/matteo-800.webp" srcset="assets/matteo-480.webp 480w, assets/matteo-800.webp 800w, assets/matteo.webp 1707w" sizes="(max-width: 900px) min(420px, calc(100vw - 32px)), 430px" width="1707" height="2560" alt="Matteo con un pallone da pallavolo all'aperto" loading="lazy"></div>
-      <div>
-        <span class="eyebrow rv">Caso studio</span>
-        <p class="case__quote rv">Quando cambi strategia, cambi risultati.</p>
-        <p class="case__meta rv">Matteo, pallavolista, 28 anni. Percorso iniziato ad aprile 2025.</p>
-        <div class="case__text rv">
-          <p>Dopo un infortunio serio alla spalla, un intervento e mesi di stop, avevo perso ritmo, fiducia e controllo. E avevo preso molto peso. Ho deciso di non "provare", ma di cambiare direzione.</p>
-          <p>Niente soluzioni drastiche: un'alimentazione completa, sostenibile, integrata con l'allenamento. Mese dopo mese mi sono sentito più forte, più leggero, più sicuro. In campo e fuori.</p>
-        </div>
-        <div class="case__actions rv"><button class="btn btn--line btn--light" type="button" data-open="analisi">${ic('arrow-up-right')}Leggi l'analisi del dottore</button> <a class="link link--light" href="#casi-studio"${attr({ cta: 'case-more' })}>Altri casi studio ${ic('arrow-right')}</a></div>
-        <p class="case__note rv">Risultati individuali, non garantiti. Ogni percorso dipende dalla persona e dal suo punto di partenza.</p>
-      </div>
-    </div>
-  </section>
-
 ${casiSection()}  <section class="sec" id="recensioni">
     <div class="wrap">
       <span class="eyebrow rv">Cosa dicono i pazienti</span>
@@ -582,7 +564,6 @@ ${Object.entries(STUDIOS).map(([k, s]) => `          ${waBtn({ href: wa(`Buongio
 </main>
 
 ` + footer('') + `
-${DIALOG}
 
 <script src="main.js" defer></script>
 </body>
@@ -807,7 +788,7 @@ for (const [k, c] of Object.entries(CITY)) {
       <div class="cases cases--light">
         ${Object.entries(CASES).map(([k, c]) => caseCard(k, c, '../')).join('\n        ')}
       </div>
-      <p class="note" style="margin-top:2rem">Cerchi un altro esempio? Leggi il <a href="../#caso-studio">caso di Matteo, pallavolista</a>, o guarda i <a href="../#casi-studio">video in cui rispondo alle domande dei pazienti</a>.</p>
+      <p class="note" style="margin-top:2rem">Vuoi saperne di più? Guarda i <a href="../#casi-studio">video in cui rispondo alle domande dei pazienti</a>.</p>
     </div>
   </section>
   <section class="sec sec--dark">
@@ -956,7 +937,7 @@ for (const [k, c] of Object.entries(CITY)) {
         <p><a href="../prima-visita/">Scopri come si svolge la prima visita</a>.</p>
         <h3>Con chi lavoro</h3>
         <ul><li>Atleti agonisti e amatori</li><li>Sportivi di squadra e di discipline individuali</li><li>Chi vuole ripartire dopo uno stop o un infortunio</li><li>Chi vuole migliorare energia, recupero o composizione corporea</li></ul>
-        <p>Un esempio concreto è il <a href="../#caso-studio">caso di Matteo</a>, pallavolista: dopo un infortunio alla spalla e mesi di stop, un percorso graduale e sostenibile lo ha riportato in campo. I risultati sono sempre individuali e non garantiti.</p>
+        <p>Un esempio concreto è il caso di Matteo, pallavolista: dopo un infortunio alla spalla e mesi di stop, un percorso graduale e sostenibile lo ha riportato in campo. I risultati sono sempre individuali e non garantiti. Leggi anche i <a href="../casi-studio/">casi studio</a>.</p>
         <h3>Di cosa mi occupo</h3>
         <ul>${Object.entries(SERVICES).filter(([sk]) => sk !== 'prima-visita').map(([sk, sv]) => `<li><a href="../${sk}/">${sv.short}</a></li>`).join('')}</ul>
         <h3>Dove ricevo</h3>
